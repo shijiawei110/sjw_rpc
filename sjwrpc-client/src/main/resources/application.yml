@@ -1,0 +1,10 @@
+server:
+  port: 9110
+
+#netty服务端 端口
+
+sjwrpc:
+  netty:
+    server:
+      ip: 127.0.0.1
+      port: 9011
