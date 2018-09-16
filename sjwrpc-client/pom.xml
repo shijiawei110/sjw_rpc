@@ -22,6 +22,20 @@
 
     <dependencies>
 
+        <!--sjwrpc-core-->
+        <dependency>
+            <groupId>org.sjw</groupId>
+            <artifactId>sjwrpc-core</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!--api-->
+        <dependency>
+            <groupId>org.sjw</groupId>
+            <artifactId>sjwrpc-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+
         <!--web starter-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -69,7 +83,6 @@
         </dependency>
 
     </dependencies>
-
 
 
 </project>

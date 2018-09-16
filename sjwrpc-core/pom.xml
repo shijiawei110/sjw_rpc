@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.sjw</groupId>
-    <artifactId>sjwrpc-server</artifactId>
+    <artifactId>sjwrpc-core</artifactId>
     <version>1.0</version>
 
     <properties>
@@ -22,19 +22,6 @@
 
     <dependencies>
 
-        <!--sjwrpc-core-->
-        <dependency>
-            <groupId>org.sjw</groupId>
-            <artifactId>sjwrpc-core</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <!--api-->
-        <dependency>
-            <groupId>org.sjw</groupId>
-            <artifactId>sjwrpc-api</artifactId>
-            <version>1.0</version>
-        </dependency>
         <!--web starter-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,6 +33,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.18</version>
+        </dependency>
+
+        <!--apache common-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.7</version>
         </dependency>
 
         <!--netty-->
@@ -89,7 +83,6 @@
         </dependency>
 
     </dependencies>
-
 
 
 </project>

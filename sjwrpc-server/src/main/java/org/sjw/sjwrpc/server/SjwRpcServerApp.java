@@ -11,6 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SjwRpcServerApp {
     public static void main(String[] args) {
-        SpringApplication.run(SjwRpcServerApp.class, args);
+        SpringApplication springApplication = new SpringApplication(SjwRpcServerApp.class);
+        //添加监听事件
+        springApplication.addListeners(new ApplicationStartup());
+        springApplication.run(args);
     }
 }
