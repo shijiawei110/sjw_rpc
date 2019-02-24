@@ -1,4 +1,4 @@
-package org.sjw.sjwrpc.api.netty;
+package org.sjw.sjwrpc.client.netty;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class CommunicateContainer {
 
     //主容器
-    private static Map<Long, Response> container = Maps.newHashMap();
+    private static Map<Long, Object> container = Maps.newHashMap();
     //垃圾堆 容器（自旋全部失败后放入此区域）依照此区域 定时清除主容易的key
     private static Map<Long, Integer> containerWait = Maps.newHashMap();
 
@@ -27,15 +27,15 @@ public class CommunicateContainer {
     //自旋间隔时间 ms
     private static long spinMs = 10L;
 
-    public static void setResponse(Long requestId,Response response){
+    public static void setResponse(Long requestId,Object response){
         container.put(requestId,response);
     }
 
 
-    public static Response getResponse(Long requestId) throws InterruptedException {
-        Response result = null;
+    public static Object getResponse(Long requestId) throws InterruptedException {
+        Object result = null;
         for (int i = 0; i < spinNum; i++) {
-            Response response = container.get(requestId);
+            Object response = container.get(requestId);
             if (null == response) {
                 Thread.sleep(spinMs);
                 continue;

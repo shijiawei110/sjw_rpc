@@ -1,10 +1,11 @@
-package org.sjw.sjwrpc.api.request;
+package org.sjw.sjwrpc.client.request;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.sjw.sjwrpc.api.netty.ClientHanderManager;
-import org.sjw.sjwrpc.api.netty.CommunicateContainer;
-import org.sjw.sjwrpc.api.utils.IdCommon;
+import org.sjw.sjwrpc.client.exception.CommonException;
+import org.sjw.sjwrpc.client.netty.ClientHanderManager;
+import org.sjw.sjwrpc.client.netty.CommunicateContainer;
+import org.sjw.sjwrpc.client.utils.IdCommon;
 import org.sjw.sjwrpc.core.pojo.Request;
 import org.sjw.sjwrpc.core.pojo.Response;
 
@@ -50,17 +51,27 @@ public class RequestHandlerProxy implements InvocationHandler {
         /**
          * 进行netty远程获取运算结果
          */
-        Response response = doRemote(method, args);
+        Object response = doRemote(method, args);
         log.info("do netty request end-> class={} method={}", apiName, method.getName());
         //获取结果data
         if (null == response) {
             return null;
         }
-        if(StringUtils.isNotBlank(response.getError())){
-            return null;
+        if(response instanceof String){
+            //如果是提示的话
+            throw new CommonException(1,(String) response);
         }
-        Object resultObj=response.getResult();
-        return resultObj;
+        if(response instanceof Response) {
+            Response res = (Response) response;
+            if (StringUtils.isNotBlank(res.getError())) {
+                return null;
+            }
+            Object resultObj = res.getResult();
+            return resultObj;
+        }
+        else{
+            return response;
+        }
     }
 
     /**
@@ -68,7 +79,7 @@ public class RequestHandlerProxy implements InvocationHandler {
      *
      * @return
      */
-    private Response doRemote(Method method, Object[] args) throws InterruptedException {
+    private Object doRemote(Method method, Object[] args) throws InterruptedException {
         Request request = new Request();
         Long requestId = IdCommon.REQUEST_ID.incrementAndGet();
         request.setRequestId(requestId);
@@ -79,7 +90,7 @@ public class RequestHandlerProxy implements InvocationHandler {
         //执行netty调用
         ClientHanderManager.getInstance().getClientHandler().sendRequest(request);
         //自旋获取结果 结果为null就说明没有获取到 直接return
-        Response response = CommunicateContainer.getResponse(requestId);
+        Object response = CommunicateContainer.getResponse(requestId);
         return response;
     }
 

@@ -3,9 +3,7 @@ package org.sjw.sjwrpc.server;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.sjw.sjwrpc.server.annotation.SjwRpc;
-import org.sjw.sjwrpc.server.netty.NettyServer;
 import org.sjw.sjwrpc.server.utils.SjwRpcBeanMap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 

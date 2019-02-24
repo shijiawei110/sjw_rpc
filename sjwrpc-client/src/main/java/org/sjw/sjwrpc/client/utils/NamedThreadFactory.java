@@ -2,7 +2,7 @@
  * fshows.com
  * Copyright (C) 2013-2018 All Rights Reserved.
  */
-package org.sjw.sjwrpc.api.utils;
+package org.sjw.sjwrpc.client.utils;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;

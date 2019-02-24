@@ -1,6 +1,7 @@
 package org.sjw.sjwrpc.api.api;
 
-import org.sjw.sjwrpc.core.Book;
+import org.sjw.sjwrpc.api.core.Book;
+
 
 /**
  * @author shijiawei
@@ -8,5 +9,7 @@ import org.sjw.sjwrpc.core.Book;
  * @date 2018/8/31
  */
 public interface BookApi {
-    Book getBook(int id);
+    Book getBookOne(int id);
+
+    Book getBookTwo(int id);
 }

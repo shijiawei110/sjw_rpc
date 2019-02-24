@@ -1,23 +1,15 @@
-package org.sjw.sjwrpc.api.netty;
+package org.sjw.sjwrpc.client.netty;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
-import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.epoll.EpollSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LineBasedFrameDecoder;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.sjw.sjwrpc.core.pojo.Request;
 import org.sjw.sjwrpc.core.pojo.Response;
 import org.sjw.sjwrpc.core.serialize.MyDecoder;
@@ -64,28 +56,13 @@ public class ClientServer {
         } else {
             b.channel(NioSocketChannel.class);
         }
-        b.handler(new ChannelInitializer<SocketChannel>() {
-            @Override
-            public void initChannel(SocketChannel ch) throws Exception {
-                ChannelPipeline pipeline = ch.pipeline();
-                pipeline.addLast(new LengthFieldBasedFrameDecoder(65536, 0, 4, 0, 0));
-                pipeline.addLast(new MyEncoder(Request.class));
-                pipeline.addLast(new MyDecoder(Response.class));
-                pipeline.addLast(new ClientHandler());
-            }
-        });
-        ChannelFuture channelFuture = b.connect(serverIp, serverPort).sync();
-        //添加连接成功监听
-        channelFuture.addListener(new ChannelFutureListener() {
-            @Override
-            public void operationComplete(final ChannelFuture channelFuture){
-                if (channelFuture.isSuccess()) {
-                    log.info("sjwrpc-api netty connect success -> ip={} port={}", serverIp, serverPort);
-                    ClientHanderManager.getInstance().setClientHandler(channelFuture.channel().pipeline().get(ClientHandler.class));
-                }
-            }
-        });
-
+        b.handler(new ClientChannelHandlers());
+        //connect server and add listener
+        ClientHanderManager clientHanderManager = ClientHanderManager.getInstance();
+        clientHanderManager.setClientBootStrap(b);
+        clientHanderManager.setServerIp(serverIp);
+        clientHanderManager.setServerPort(serverPort);
+        clientHanderManager.doConnect();
 
     }
 

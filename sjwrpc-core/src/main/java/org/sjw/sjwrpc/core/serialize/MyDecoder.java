@@ -1,10 +1,10 @@
 package org.sjw.sjwrpc.core.serialize;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import lombok.extern.slf4j.Slf4j;
-import org.sjw.sjwrpc.core.pojo.Request;
 import org.sjw.sjwrpc.core.utils.ProtoStuffUtil;
 
 import java.util.List;

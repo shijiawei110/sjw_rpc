@@ -1,8 +1,8 @@
-package org.sjw.sjwrpc.api.clientapi;
+package org.sjw.sjwrpc.client.clientapi;
 
 import org.sjw.sjwrpc.api.api.BookApi;
-import org.sjw.sjwrpc.core.Book;
-import org.sjw.sjwrpc.api.request.RequestHandlerProxy;
+import org.sjw.sjwrpc.api.core.Book;
+import org.sjw.sjwrpc.client.request.RequestHandlerProxy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -25,8 +25,13 @@ public class BookClientApi {
         bookApi = proxy.create(BookApi.class.getName(),BookApi.class);
     }
 
-    public Book getBook(int id) {
-        Book book = bookApi.getBook(id);
+    public Book getBookOne(int id) {
+        Book book = bookApi.getBookOne(id);
+        return book;
+    }
+
+    public Book getBookTwo(int id) {
+        Book book = bookApi.getBookTwo(id);
         return book;
     }
 }

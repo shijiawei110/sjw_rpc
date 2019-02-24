@@ -1,4 +1,4 @@
-package org.sjw.sjwrpc.api.utils;
+package org.sjw.sjwrpc.client.utils;
 
 import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtostuffIOUtil;

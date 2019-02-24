@@ -1,4 +1,4 @@
-package org.sjw.sjwrpc.core;
+package org.sjw.sjwrpc.api.core;
 
 import lombok.Data;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
